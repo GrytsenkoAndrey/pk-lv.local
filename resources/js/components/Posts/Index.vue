@@ -1,0 +1,3 @@
+<template>
+    Posts Index
+</template>

@@ -1138,6 +1138,22 @@ select {
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+ul.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 10px;
+}
+ul.pagination li {
+    cursor: pointer;
+    color: rgb(0, 0, 255, .7);
+}
+ul.pagination li.active {
+    font-weight: bold;
+}
+ul.pagination li a:hover {
+    text-decoration: underline;
+}
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));

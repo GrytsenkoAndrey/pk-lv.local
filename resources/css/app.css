@@ -1,3 +1,23 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+ul.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 10px;
+}
+
+ul.pagination li {
+    cursor: pointer;
+    color: rgb(0, 0, 255, .7);
+}
+
+ul.pagination li.active {
+    font-weight: bold;
+}
+
+ul.pagination li a:hover {
+    text-decoration: underline;
+}

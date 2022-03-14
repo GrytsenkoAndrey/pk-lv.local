@@ -19,7 +19,7 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                <tr v-for="post in posts" :key="post.id">
+                <tr v-for="post in posts.data" :key="post.id">
                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">{{ post.id }}</td>
                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">{{ post.title }}</td>
                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">{{ post.content }}</td>
@@ -27,6 +27,8 @@
                 </tr>
                 </tbody>
             </table>
+
+            <Pagination :data="posts" @pagination-change-page="getPosts"/>
         </div>
     </div>
 </template>
@@ -45,7 +47,7 @@ export default {
         const { posts, getPosts } = usePosts();
         onMounted(getPosts);
 
-        return { posts }
+        return { posts, getPosts }
     }
 }
 </script>

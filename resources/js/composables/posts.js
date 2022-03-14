@@ -6,7 +6,7 @@ export default function usePosts() {
     const getPosts = async () => {
         axios.get('http://pk-lv.local:8400/api/posts')
             .then(response => {
-                posts.value = response.data;
+                posts.value = response.data.data;
             });
     }
 

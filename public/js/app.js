@@ -21445,7 +21445,7 @@ function usePosts() {
           switch (_context.prev = _context.next) {
             case 0:
               axios.get('http://pk-lv.local:8400/api/posts').then(function (response) {
-                posts.value = response.data;
+                posts.value = response.data.data;
               });
 
             case 1:

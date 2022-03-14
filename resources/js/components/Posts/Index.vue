@@ -32,21 +32,20 @@
 </template>
 
 <script>
+/**
+ * Vue3 composition has 2 part
+ * 1 - composable it's like a service class in Laravel; set of method and variables (like include)
+ * 2 - use in the component Vue it's make it shorter
+ */
+import { onMounted } from "vue";
+import usePosts from "../../composables/posts";
+
 export default {
-    data() {
-        return {
-            posts: []
-        }
-    },
-    mounted() {
-        this.fetchPost();
-    },
-    methods: {
-        fetchPost() {
-            axios.get('http://pk-lv.local:8400/api/posts')
-                .then(response => this.posts = response.data)
-                .catch(error => console.log(error));
-        }
+    setup () {
+        const { posts, getPosts } = usePosts();
+        onMounted(getPosts);
+
+        return { posts }
     }
 }
 </script>

@@ -39,7 +39,10 @@
                 </tbody>
             </table>
 
-            <Pagination :data="posts" @pagination-change-page="getPosts"/>
+<!-- solution to pass parameters not in the documentation but inside the Issue answers
+ "page => getPosts(page, parameter)"
+ -->
+            <Pagination :data="posts" @pagination-change-page="page => getPosts(page, selectedCategory)"/>
         </div>
     </div>
 </template>
@@ -50,7 +53,7 @@
  * 1 - composable it's like a service class in Laravel; set of method and variables (like include)
  * 2 - use in the component Vue it's make it shorter
  */
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import usePosts from "../../composables/posts";
 import useCategories from "../../composables/categories";
 
@@ -63,8 +66,11 @@ export default {
             getPosts();
             getCategories();
         });
+        watch(selectedCategory, (current, previous) => {
+            getPosts(1, current);
+        });
 
-        return { posts, getPosts, categories }
+        return { posts, getPosts, categories, selectedCategory }
     }
 }
 </script>

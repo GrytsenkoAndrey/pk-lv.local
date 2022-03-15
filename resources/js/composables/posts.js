@@ -3,8 +3,8 @@ import { ref } from 'vue';
 export default function usePosts() {
     const posts = ref({});
 
-    const getPosts = async (page = 1) => {
-        await axios.get('http://pk-lv.local:8400/api/posts?page=' + page)
+    const getPosts = async (page = 1, category = '') => {
+        await axios.get('http://pk-lv.local:8400/api/posts?page=' + page + '&category=' + category)
             .then(response => {
                 posts.value = response.data; // remove .data because of laravel-vue-pagination
             });

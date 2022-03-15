@@ -11,7 +11,11 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['category:id,name'])->paginate(10);
+        $posts = Post::with(['category:id,name'])
+            ->when(\request('category'), function ($query) {
+                $query->where('category_id', request('category'));
+            })
+            ->paginate(10);
 
         return PostResource::collection($posts);
     }

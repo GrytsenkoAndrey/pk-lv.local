@@ -1,6 +1,13 @@
 <template>
     <div class="overflow-hidden overflow-x-auto p-6 bg-white border-gray-200">
         <div class="min-w-full align-middle">
+            <div class="mb-4">
+                <select class="block mt-1 w-full sm:w-1/4 rounded-md shadow"
+                    v-model="selectedCategory">
+                    <option value="" selected>--- Filter by category ---</option>
+                    <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                </select>
+            </div>
             <table class="min-w-full divide-y divide-gray-200 border">
                 <thead>
                 <tr>
@@ -43,15 +50,21 @@
  * 1 - composable it's like a service class in Laravel; set of method and variables (like include)
  * 2 - use in the component Vue it's make it shorter
  */
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import usePosts from "../../composables/posts";
+import useCategories from "../../composables/categories";
 
 export default {
     setup () {
+        const selectedCategory = ref('');
         const { posts, getPosts } = usePosts();
-        onMounted(getPosts);
+        const { categories, getCategories } = useCategories();
+        onMounted(() => {
+            getPosts();
+            getCategories();
+        });
 
-        return { posts, getPosts }
+        return { posts, getPosts, categories }
     }
 }
 </script>

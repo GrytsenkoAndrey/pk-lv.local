@@ -6,12 +6,14 @@ const routes = [
     {
         path: '/',
         component: PostsIndex,
-        name: 'posts.index'
+        name: 'posts.index',
+        meta: { title: 'Posts'}
     },
     {
         path: '/posts/create',
         component: PostsCreate,
-        name:  'posts.create'
+        name:  'posts.create',
+        meta: { title: 'Add new post'}
     }
 ];
 

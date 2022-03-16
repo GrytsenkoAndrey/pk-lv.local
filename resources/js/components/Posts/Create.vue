@@ -26,6 +26,20 @@
             </div>
         </div>
 
+        <!-- Image -->
+        <div class="mt-4">
+            <label for="thumbnail" class="block font-medium text-sm text-gray-700">
+                Thumbnail
+            </label>
+            <!-- we have to look for change and manually assign target files (array) with 1st element-->
+            <input @change="post.thumbnail = $event.target.files[0]" type="file" id="thumbnail">
+            <div class="text-red-600 mt-1">
+                <div v-for="message in validationErrors?.thumbnail">
+                    {{ message }}
+                </div>
+            </div>
+        </div>
+
         <!-- Category -->
         <div class="mt-4">
             <label for="post-category" class="block font-medium text-sm text-gray-700">
@@ -47,7 +61,7 @@
         <!-- Buttons -->
         <div class="mt-4">
             <button :disabled="isLoading" class="inline-flex items-center px-3 py-2 bg-blue-600 text-white rounded disabled:opacity-75 disabled:cursor-not-allowed">
-                <div v-show="isLoading" class="inline-block animate-spin w-4 h-4 mr-2 border-t-2 border-t-white border-r-2 border-r-white border-b-2 border-b-white border-l-2 border-l-blue-600 rounded-full"></div>
+                <span v-show="isLoading" class="inline-block animate-spin w-4 h-4 mr-2 border-t-2 border-t-white border-r-2 border-r-white border-b-2 border-b-white border-l-2 border-l-blue-600 rounded-full"></span>
                 <span v-if="isLoading">Processing...</span>
                 <span v-else>Save</span>
             </button>
@@ -65,7 +79,8 @@ export default {
         const post = reactive({ // reactive - is to reuse in different component
             title: '',
             content: '',
-            category_id: ''
+            category_id: '',
+            thumbnail: ''
         });
         const { categories, getCategories } = useCategories();
         const { storePost, validationErrors, isLoading } = usePosts();

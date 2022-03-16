@@ -29,7 +29,14 @@ export default function usePosts() {
         isLoading.value = true;
         validationErrors.value = {};
 
-        await axios.post('http://pk-lv.local:8400/api/posts', post)
+        let serializedPost = new FormData();
+        for (let item in post) {
+            if (post.hasOwnProperty(item)) {
+                serializedPost.append(item, post[item]);
+            }
+        }
+
+        await axios.post('http://pk-lv.local:8400/api/posts', serializedPost)
             .then(response => {
                 router.push({name: 'posts.index'});
             })

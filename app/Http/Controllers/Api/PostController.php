@@ -56,4 +56,11 @@ class PostController extends Controller
 
         return response()->json(['Updated'], Response::HTTP_ACCEPTED);
     }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return response()->noContent();
+    }
 }

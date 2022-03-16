@@ -80,5 +80,23 @@ export default function usePosts() {
             .finally(() => isLoading.value = false);
     }
 
-    return { posts, post, getPosts, getPost, storePost, updatePost, validationErrors, isLoading }
+    const deletePost = async (id) => {
+        await axios.delete('http://pk-lv.local:8400/api/posts/' + id)
+            .then(response => {
+                getPosts();
+                router.push({name: 'posts.index'});
+                swal({
+                    icon: 'info',
+                    title: 'Post deleted!'
+                });
+            })
+            .catch(error => {
+                swal({
+                    icon: 'error',
+                    title: 'Something wrong!'
+                })
+            });
+    }
+
+    return { posts, post, getPosts, getPost, storePost, updatePost, deletePost, validationErrors, isLoading }
 }

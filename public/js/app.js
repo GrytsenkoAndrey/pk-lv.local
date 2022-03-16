@@ -21636,7 +21636,8 @@ __webpack_require__.r(__webpack_exports__);
 
     var _usePosts = (0,_composables_posts__WEBPACK_IMPORTED_MODULE_1__["default"])(),
         posts = _usePosts.posts,
-        getPosts = _usePosts.getPosts;
+        getPosts = _usePosts.getPosts,
+        deletePost = _usePosts.deletePost;
 
     var _useCategories = (0,_composables_categories__WEBPACK_IMPORTED_MODULE_2__["default"])(),
         categories = _useCategories.categories,
@@ -21659,6 +21660,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       posts: posts,
       getPosts: getPosts,
+      deletePost: deletePost,
       categories: categories,
       selectedCategory: selectedCategory,
       orderColumn: orderColumn,
@@ -22139,6 +22141,7 @@ var _hoisted_22 = {
 
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Edit");
 
+var _hoisted_24 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
@@ -22263,7 +22266,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
-    , ["to"])])]);
+    , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      href: "#",
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return $setup.deletePost(post.id);
+      }, ["prevent"]),
+      "class": "ml-2 text-red-600"
+    }, "Delete", 8
+    /* PROPS */
+    , _hoisted_24)])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" solution to pass parameters not in the documentation but inside the Issue answers\n \"page => getPosts(page, parameter)\"\n "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pagination, {
@@ -22702,6 +22713,42 @@ function usePosts() {
     };
   }();
 
+  var deletePost = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(id) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return axios["delete"]('http://pk-lv.local:8400/api/posts/' + id).then(function (response) {
+                getPosts();
+                router.push({
+                  name: 'posts.index'
+                });
+                swal({
+                  icon: 'info',
+                  title: 'Post deleted!'
+                });
+              })["catch"](function (error) {
+                swal({
+                  icon: 'error',
+                  title: 'Something wrong!'
+                });
+              });
+
+            case 2:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function deletePost(_x4) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
   return {
     posts: posts,
     post: post,
@@ -22709,6 +22756,7 @@ function usePosts() {
     getPost: getPost,
     storePost: storePost,
     updatePost: updatePost,
+    deletePost: deletePost,
     validationErrors: validationErrors,
     isLoading: isLoading
   };

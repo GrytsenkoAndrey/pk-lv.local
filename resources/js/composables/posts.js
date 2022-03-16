@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 // use<> - default name conversion
 export default function usePosts() {
@@ -7,6 +7,7 @@ export default function usePosts() {
     const router = useRouter();
     const validationErrors = ref({});
     const isLoading = ref(false);
+    const swal = inject('$swal');
 
     const getPosts = async (
         page = 1,
@@ -40,6 +41,10 @@ export default function usePosts() {
         await axios.post('http://pk-lv.local:8400/api/posts', serializedPost)
             .then(response => {
                 router.push({name: 'posts.index'});
+                swal({
+                    icon: 'success',
+                    title: 'Post saved successfully'
+                });
             })
             .catch(error => {
                 if (error.response?.data) {
@@ -65,6 +70,7 @@ export default function usePosts() {
         await axios.patch('http://pk-lv.local:8400/api/posts/' + post.id, post)
             .then(response => {
                 router.push({name: 'posts.index'});
+                swal('Post updated!');
             })
             .catch(error => {
                 if (error.response?.data) {

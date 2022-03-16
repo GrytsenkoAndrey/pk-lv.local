@@ -56,5 +56,23 @@ export default function usePosts() {
             });
     }
 
-    return { posts, post, getPosts, getPost, storePost, validationErrors, isLoading }
+    const updatePost = async (post) => {
+        if (isLoading.value) return;
+
+        isLoading.value = true;
+        validationErrors.value = {};
+
+        await axios.patch('http://pk-lv.local:8400/api/posts/' + post.id, post)
+            .then(response => {
+                router.push({name: 'posts.index'});
+            })
+            .catch(error => {
+                if (error.response?.data) {
+                    validationErrors.value = error.response.data.errors;
+                }
+            })
+            .finally(() => isLoading.value = false);
+    }
+
+    return { posts, post, getPosts, getPost, storePost, updatePost, validationErrors, isLoading }
 }

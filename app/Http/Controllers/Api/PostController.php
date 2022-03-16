@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -47,5 +48,12 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return new PostResource($post);
+    }
+
+    public function update(StorePostRequest $request, Post $post)
+    {
+        $post->update($request->validated());
+
+        return response()->json(['Updated'], Response::HTTP_ACCEPTED);
     }
 }

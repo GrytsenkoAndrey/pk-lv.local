@@ -21880,7 +21880,7 @@ var _hoisted_13 = {
   "class": "py-12"
 };
 var _hoisted_14 = {
-  "class": "w-full sm:px-6 lg:px-8"
+  "class": "max-w-7xl sm:px-6 lg:px-8"
 };
 var _hoisted_15 = {
   "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"

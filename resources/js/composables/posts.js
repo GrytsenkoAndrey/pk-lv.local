@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 // use<> - default name conversion
 export default function usePosts() {
     const posts = ref({});
+    const post = ref({});
     const router = useRouter();
     const validationErrors = ref({});
     const isLoading = ref(false);
@@ -48,5 +49,12 @@ export default function usePosts() {
             .finally(() => isLoading.value = false);
     }
 
-    return { posts, getPosts, storePost, validationErrors, isLoading }
+    const getPost = async (id) => {
+        await axios.get('http://pk-lv.local:8400/api/posts/' + id)
+            .then(response => {
+                post.value = response.data.data;
+            });
+    }
+
+    return { posts, post, getPosts, getPost, storePost, validationErrors, isLoading }
 }

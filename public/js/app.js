@@ -22719,24 +22719,37 @@ function usePosts() {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              _context5.next = 2;
-              return axios["delete"]('http://pk-lv.local:8400/api/posts/' + id).then(function (response) {
-                getPosts();
-                router.push({
-                  name: 'posts.index'
-                });
-                swal({
-                  icon: 'info',
-                  title: 'Post deleted!'
-                });
-              })["catch"](function (error) {
-                swal({
-                  icon: 'error',
-                  title: 'Something wrong!'
-                });
+              swal({
+                title: 'Are you sure?',
+                text: 'You won\'t be able to revert this action!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                confirmButtonColor: '#ef4444',
+                timer: 20000,
+                timerProgressBar: true,
+                reverseButtons: true
+              }).then(function (result) {
+                if (result.isConfirmed) {
+                  axios["delete"]('http://pk-lv.local:8400/api/posts/' + id).then(function (response) {
+                    getPosts();
+                    router.push({
+                      name: 'posts.index'
+                    });
+                    swal({
+                      icon: 'info',
+                      title: 'Post deleted!'
+                    });
+                  })["catch"](function (error) {
+                    swal({
+                      icon: 'error',
+                      title: 'Something wrong!'
+                    });
+                  });
+                }
               });
 
-            case 2:
+            case 1:
             case "end":
               return _context5.stop();
           }

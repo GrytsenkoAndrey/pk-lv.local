@@ -81,20 +81,35 @@ export default function usePosts() {
     }
 
     const deletePost = async (id) => {
-        await axios.delete('http://pk-lv.local:8400/api/posts/' + id)
-            .then(response => {
-                getPosts();
-                router.push({name: 'posts.index'});
-                swal({
-                    icon: 'info',
-                    title: 'Post deleted!'
-                });
-            })
-            .catch(error => {
-                swal({
-                    icon: 'error',
-                    title: 'Something wrong!'
-                })
+        swal({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this action!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            confirmButtonColor: '#ef4444',
+            timer: 20000,
+            timerProgressBar: true,
+            reverseButtons: true
+        })
+            .then(result => {
+                if (result.isConfirmed) {
+                    axios.delete('http://pk-lv.local:8400/api/posts/' + id)
+                        .then(response => {
+                            getPosts();
+                            router.push({name: 'posts.index'});
+                            swal({
+                                icon: 'info',
+                                title: 'Post deleted!'
+                            });
+                        })
+                        .catch(error => {
+                            swal({
+                                icon: 'error',
+                                title: 'Something wrong!'
+                            })
+                        });
+                }
             });
     }
 

@@ -6,8 +6,19 @@ import PostsCreate from "../components/Posts/Create";
 import PostsEdit from "../components/Posts/Edit";
 import Login from "../components/Login";
 
+// to protect just get page by direct access (from the address line)
+function auth(to, from, next) {
+    if (JSON.parse(localStorage.getItem('loggedIn'))) {
+        next();
+    }
+
+    next('/login');
+}
+
 const routes = [
     {
+        path: '/',
+        redirect: { name: 'login'},
         component: GuestLayout,
         children: [
             {
@@ -19,6 +30,7 @@ const routes = [
     },
     {
         component: AuthenticatedLayout,
+        beforeEnter: auth,
         children: [
             {
                 path: '/posts',

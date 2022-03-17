@@ -24,8 +24,24 @@ class PostController extends Controller
         }
 
         $posts = Post::with(['category:id,name'])
-            ->when(\request('category'), function ($query) {
-                $query->where('category_id', request('category'));
+            ->when(\request('search_category'), function ($query) {
+                $query->where('category_id', request('search_category'));
+            })
+            ->when(\request('search_id'), function ($query) {
+                $query->where('id', request('search_id'));
+            })
+            ->when(\request('search_category'), function ($query) {
+                $query->where('title', 'LIKE', '%' . request('search_title') .'%');
+            })
+            ->when(\request('search_content'), function ($query) {
+                $query->where('content', 'LIKE', '%' . request('search_content') .'%');
+            })
+            ->when(request('search_global'), function ($query) {
+                $query->where(function ($q) {
+                    $q->where('id', request('search_global'))
+                        ->orWhere('title', 'LIKE', '%' . request('search_global') .'%')
+                        ->orWhere('content', 'LIKE', '%' . request('search_global') .'%');
+                });
             })
             ->orderBy($orderColumn, $orderDirection)
             ->paginate(10);

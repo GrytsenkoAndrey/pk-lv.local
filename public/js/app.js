@@ -22730,6 +22730,7 @@ window.axios.interceptors.response.use(function (response) {
     if (JSON.parse(localStorage.getItem('loggedIn'))) {
       localStorage.setItem('loggedIn', false);
       location.assign('/login');
+      console.log(error);
     }
   }
 

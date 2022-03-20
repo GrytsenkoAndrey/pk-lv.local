@@ -42,6 +42,7 @@ class PostController extends Controller
                         ->orWhere('title', 'LIKE', '%' . request('search_global') .'%')
                         ->orWhere('content', 'LIKE', '%' . request('search_global') .'%');
                 });
+
             })
             ->orderBy($orderColumn, $orderDirection)
             ->paginate(10);

@@ -10,7 +10,7 @@ import useAuth from "./composables/auth";
 const app = createApp({
     setup() {
         const { getUser } = useAuth();
-        onMounted(getUser)
+        onMounted(getUser);
     }
 });
 app.use(router); // app.component we delete because it will be a part of router
